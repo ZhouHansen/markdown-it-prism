@@ -46,9 +46,10 @@ function loadPrismPlugin(name) {
  * @return <String> <code>text</code> wrapped in <code>&lt;pre&gt;</code> and <code>&lt;code&gt;</code>, both equipped with the appropriate class (markdown-it’s langPrefix + lang). If Prism knows <code>lang</code>, <code>text</code> will be highlighted by it.
  */
 function highlight(markdownit, text, lang) {
-	const prismLang = loadPrismLang(lang);
-	const code = prismLang ? Prism.highlight(text, prismLang) : markdownit.utils.escapeHtml(text);
-	const classAttribute = lang ? ` class="${markdownit.options.langPrefix}${lang}"` : '';
+	var prismLang = loadPrismLang(lang);
+	var code = prismLang ? Prism.highlight(text, prismLang) : markdownit.utils.escapeHtml(text);
+	code = code.replace(/\n$/, "")
+	var classAttribute = lang ? ` class="${markdownit.options.langPrefix}${lang}"` : '';
 	return `<pre${classAttribute}>\n<code${classAttribute}>${code}</code></pre>`;
 }
 
